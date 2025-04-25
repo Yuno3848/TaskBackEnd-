@@ -64,7 +64,7 @@ export const registeredUser = async (req, res) => {
     user.emailVerificationToken = hashedToken;
     user.emailVerificationTokenExpiry = tokenExpiry;
     await user.save();
-
+//options
     await sendMail({
       username: user.username,
       email: user.email,
@@ -217,7 +217,7 @@ export const logOutUser = async (req, res) => {
 export const getProfile = async (req, res) => {
   // const user = await Users.findById({req.user.id})
   try {
-    const user = await Users.findById(req.user.id);
+    const user = await Users.findById(req.user.id).select("-password");
     console.log("user", user);
     if (!user) {
       return res.status(404).json({
